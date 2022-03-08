@@ -7,6 +7,14 @@ export default function App() {
   const [dataType, setDataType] = useState("");
 
   const [data, setData] = useState(null);
+  const string = "planets"
+
+  useEffect(() => dataType && fetch(`https://swapi.dev/api/${dataType}/`)
+                .then(res => res.json())
+                .then(res => {
+                  console.log(res.results);
+                  setData(() => res)})
+                ,[dataType])
 
   console.log({ data });
 
@@ -15,7 +23,7 @@ export default function App() {
 
   return (
     <div>
-      <SelectTypeForm setDataType={setDataType} />
+      <SelectTypeForm setDataType={setDataType}/>
       {data && <DataList dataType={dataType} data={data.results} />}
     </div>
   );
